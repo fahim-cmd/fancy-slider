@@ -15,6 +15,7 @@ const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 
 // show images 
 const showImages = (images) => {
+  console.log
   imagesArea.style.display = 'block';
   gallery.innerHTML = '';
   // show gallery title
@@ -31,7 +32,7 @@ const showImages = (images) => {
 const getImages = (query) => {
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
-    .then(data => showImages(data.hitS))
+    .then(data =>showImages(data.hits)       )
     .catch(err => console.log(err))
 }
 
@@ -67,7 +68,7 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('duration').value || 1000;
+  const duration = document.getElementById('doration').value || 1000;
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -77,10 +78,19 @@ const createSlider = () => {
     sliderContainer.appendChild(item)
   })
   changeSlide(0)
-  timer = setInterval(function () {
-    slideIndex++;
-    changeSlide(slideIndex);
-  }, duration);
+  if(duration > 0){
+    timer = setInterval(function () {
+      slideIndex++;
+      changeSlide(slideIndex );
+    }, duration);
+  }
+  else{
+    document.getElementById("wrong-duration").innerHTML = `
+    <p style="text-align: center; color:red; font-weight: 800">
+      INVALID DURATION INPUT!!!
+    </P>
+    `;
+  }
 }
 
 // change slider index 
