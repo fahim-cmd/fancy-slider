@@ -29,25 +29,35 @@ const showImages = (images) => {
 
 }
 
+//enter key press 
+document.getElementById("search").addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    document.getElementById("search-btn").click();
+  }
+})
+
 const getImages = (query) => {
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
-    .then(data =>showImages(data.hits)       )
+    .then(data => showImages(data.hits))
     .catch(err => console.log(err))
 }
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
-  element.classList.add('added');
+  element.classList.toggle('added');
  
   let item = sliders.indexOf(img);
+  console.log(item)
+  console.log(item)
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
-  }
+    sliders.splice(item, 1)
+  }  
 }
+
 var timer
 const createSlider = () => {
   // check slider image length
@@ -63,28 +73,28 @@ const createSlider = () => {
   <span class="prev" onclick="changeItem(-1)"><i class="fas fa-chevron-left"></i></span>
   <span class="next" onclick="changeItem(1)"><i class="fas fa-chevron-right"></i></span>
   `;
-
   sliderContainer.appendChild(prevNext)
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
   const duration = document.getElementById('doration').value || 1000;
-  sliders.forEach(slide => {
-    let item = document.createElement('div')
-    item.className = "slider-item";
-    item.innerHTML = `<img class="w-100"
+
+  if (duration > 0) {  //negative duration is not applicable
+    sliders.forEach(slide => {
+      let item = document.createElement('div')
+      item.className = "slider-item";
+      item.innerHTML = `<img class="w-100"
     src="${slide}"
     alt="">`;
-    sliderContainer.appendChild(item)
-  })
-  changeSlide(0)
-  if(duration > 0){
+      sliderContainer.appendChild(item)
+    })
+    changeSlide(0)
     timer = setInterval(function () {
       slideIndex++;
-      changeSlide(slideIndex );
+      changeSlide(slideIndex);
     }, duration);
   }
-  else{
+  else {
     document.getElementById("wrong-duration").innerHTML = `
     <p style="text-align: center; color:red; font-weight: 800">
       INVALID DURATION INPUT!!!
