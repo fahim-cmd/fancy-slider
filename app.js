@@ -20,14 +20,21 @@ const showImages = (images) => {
   // show gallery title
   galleryHeader.style.display = 'flex';
   images.forEach(image => {
+    console.log(image)
     let div = document.createElement('div');
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2 mainImage';
-    div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
-
-    let imageTag = document.createElement('div'); //for bonus, hover effect pics name show
+    div.innerHTML = ` <img class="img-fluid img-thumbnail imgStyle" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
+    //for bonus, hover effect pics name show
+    let imageTag = document.createElement('div'); 
     imageTag.className = 'imageTag';
     imageTag.innerHTML = `
-      <h6>${image.tags}</h6>
+      <h6>${image.tags}</h6>      
+        <div>
+          <i class="fas fa-download"></i>${image.downloads}
+          <i class="fas fa-comments"></i>${image.comments}
+          <i class="far fa-thumbs-up"></i>${image.likes}
+        </div>
+    
       `;
     gallery.appendChild(div)
     div.appendChild(imageTag)
