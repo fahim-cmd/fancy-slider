@@ -14,19 +14,24 @@ let sliders = [];
 const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 
 // show images 
-const showImages = (images) => {
-  console.log
+const showImages = (images) => {  
   imagesArea.style.display = 'block';
   gallery.innerHTML = '';
   // show gallery title
   galleryHeader.style.display = 'flex';
   images.forEach(image => {
     let div = document.createElement('div');
-    div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
+    div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2 mainImage';
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
-    gallery.appendChild(div)
-  })
 
+    let imageTag = document.createElement('div'); //for bonus, hover effect pics name show
+    imageTag.className = 'imageTag';
+    imageTag.innerHTML = `
+      <h6>${image.tags}</h6>
+      `;
+    gallery.appendChild(div)
+    div.appendChild(imageTag)
+  })
 }
 
 //enter key press 
@@ -47,15 +52,13 @@ let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
   element.classList.toggle('added');
- 
+
   let item = sliders.indexOf(img);
-  console.log(item)
-  console.log(item)
   if (item === -1) {
     sliders.push(img);
   } else {
     sliders.splice(item, 1)
-  }  
+  }
 }
 
 var timer
@@ -79,15 +82,17 @@ const createSlider = () => {
   imagesArea.style.display = 'none';
   const duration = document.getElementById('doration').value || 1000;
 
+
   if (duration > 0) {  //negative duration is not applicable
     sliders.forEach(slide => {
-      let item = document.createElement('div')
+      let item = document.createElement('div');
       item.className = "slider-item";
       item.innerHTML = `<img class="w-100"
     src="${slide}"
     alt="">`;
       sliderContainer.appendChild(item)
     })
+
     changeSlide(0)
     timer = setInterval(function () {
       slideIndex++;

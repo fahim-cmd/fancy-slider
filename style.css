@@ -9,6 +9,31 @@
 .gallery-header {
   display: none;
 }
+/* bonus part 1*/
+.mainImage{
+  position: relative;
+}
+.imageTag{
+  position: absolute;
+  top: 0;
+  color:#1e1743;  
+  width: 90%;
+  padding-top: 12px;
+  padding-left: 10px;
+  display: none;
+}
+.imageTag h6{
+  font-weight: 900;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+.mainImage:hover .imageTag{
+  display: block;
+}
+/* bonus part 2 */
+.slideInfo{
+  position:absolute;
+  top: 94%;
+}
 
 .slider-item {
   display: none;
